@@ -1,3 +1,3 @@
-# dtrpg-client.go
+# dtrpg-sdk.go
 
-A client library for DriveThru RPG in Go
+An SDK for DriveThru RPG in Go
