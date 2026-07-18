@@ -20,6 +20,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate token
+        id: psw_ci_token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.PSW_CI_APP_ID }}
+          private-key: ${{ secrets.PSW_CI_PRIVATE_KEY }}
+
       - name: Resolve tag
         id: resolve_tag
         run: |
@@ -80,13 +87,21 @@ jobs:
           tag_name: ${{ steps.resolve_tag.outputs.tag }}
           body_path: RELEASE_NOTES.md
 
+      # Pushed with the psw-ci app token, not the default GITHUB_TOKEN: the develop
+      # branch ruleset requires a passing CodeQL scan result for the exact commit being
+      # pushed, but a merge commit created and pushed here has never existed on GitHub
+      # before, so no scan can have run against it yet -- GITHUB_TOKEN's actions-bot
+      # identity isn't in the ruleset's bypass list and gets rejected (GH013). The
+      # psw-ci Integration app is a configured bypass actor, so pushing as it skips the
+      # unsatisfiable check instead of racing it.
       - name: Update develop from master
         id: update_develop
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.psw_ci_token.outputs.token }}
         run: |
           git config --global user.email "ci@pilgrimagesoftware.com"
           git config --global user.name "Pilgrimage Software CI"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/pilgrimagesoftware/dtrpg-sdk.go"
           git checkout develop
           git merge origin/master
           git push origin develop
