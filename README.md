@@ -1,5 +1,9 @@
 # dtrpg-sdk.go
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/pilgrimagesoftware/dtrpg-sdk.go.svg)](https://pkg.go.dev/github.com/pilgrimagesoftware/dtrpg-sdk.go)
+[![CI](https://github.com/pilgrimagesoftware/dtrpg-sdk.go/actions/workflows/ci.yaml/badge.svg)](https://github.com/pilgrimagesoftware/dtrpg-sdk.go/actions/workflows/ci.yaml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+
 A Go SDK for the [DriveThruRPG API](https://api.drivethrurpg.com).
 
 Provides configuration, authentication/session lifecycle, and a library client for listing
@@ -83,6 +87,10 @@ gofmt -l .
 golangci-lint run
 go test -race ./...
 ```
+
+## Release Process
+
+See [RELEASE.md](RELEASE.md).
 
 ## License
 
