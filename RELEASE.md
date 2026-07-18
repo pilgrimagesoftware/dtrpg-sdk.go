@@ -39,8 +39,12 @@ into `develop`.
 
 ## Triggering the run
 
+Always pass `--ref develop` explicitly — `workflow_dispatch` otherwise defaults to
+whichever branch is the repo's current default, and prepare-release must run against
+`develop` regardless of what that setting is set to at the time:
+
 ```sh
-gh workflow run prepare-release.yaml
+gh workflow run prepare-release.yaml --ref develop
 ```
 
-Or trigger it directly from the [Prepare Release workflow page](https://github.com/pilgrimagesoftware/dtrpg-sdk.go/actions/workflows/prepare-release.yaml).
+Or trigger it directly from the [Prepare Release workflow page](https://github.com/pilgrimagesoftware/dtrpg-sdk.go/actions/workflows/prepare-release.yaml), selecting `develop` from the branch dropdown.
