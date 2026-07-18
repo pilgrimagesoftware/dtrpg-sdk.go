@@ -9,7 +9,7 @@ A Go SDK for the [DriveThruRPG API](https://api.drivethrurpg.com).
 Provides configuration, authentication/session lifecycle, and a library client for listing
 orders, product lists, and preparing downloads.
 
-Requires Go 1.22+.
+Requires Go 1.24+.
 
 ## Installation
 
