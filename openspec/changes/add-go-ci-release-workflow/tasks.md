@@ -54,5 +54,10 @@
 
 - [x] 6.1 Confirm `golangci-lint run ./...` and `go test -race ./...` pass locally before
   opening the PR for this change (same gate the new CI workflow will enforce).
-- [ ] 6.2 After merge, manually trigger `prepare-release.yaml` once to validate the full
-  pipeline end-to-end for the SDK's first tagged release.
+- [x] 6.2 After merge, manually trigger `prepare-release.yaml` once to validate the full
+  pipeline end-to-end for the SDK's first tagged release. Ran end-to-end for v0.1.0:
+  prepare-release opened PR #9, tag-release tagged `v0.1.0` on merge, release.yaml tested,
+  indexed the module on the Go proxy, and published the GitHub Release. The develop
+  merge-back step failed (`GH013`, default `GITHUB_TOKEN` not in the ruleset's bypass
+  list) — fixed in #11 and re-verified by completing the merge-back manually with the
+  same bypass mechanism the fix now automates.
