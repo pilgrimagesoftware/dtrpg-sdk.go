@@ -21,8 +21,6 @@ jobs:
         include:
           - name: Linux
             os: ubuntu-latest
-          - name: macOS (Intel)
-            os: macos-13
           - name: macOS (Apple Silicon)
             os: macos-latest
 
