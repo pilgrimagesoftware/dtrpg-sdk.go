@@ -11,9 +11,20 @@ concurrency: ci
 
 jobs:
   test:
-    name: Validate
+    name: Validate on ${{ matrix.name }}
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            os: ubuntu-latest
+          - name: macOS (Intel)
+            os: macos-13
+          - name: macOS (Apple Silicon)
+            os: macos-latest
 
     steps:
       - name: Checkout
