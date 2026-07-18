@@ -109,6 +109,10 @@ func parseRetryAfter(header string) *time.Duration {
 	if err != nil {
 		return nil
 	}
+	const maxRetryAfterSeconds = uint64((1<<63 - 1) / int64(time.Second))
+	if seconds > maxRetryAfterSeconds {
+		return nil
+	}
 	d := time.Duration(seconds) * time.Second
 	return &d
 }
