@@ -78,6 +78,12 @@ See the package documentation (`go doc`) for the full API reference, including `
 `AuthSession`/`AuthState`, `LibraryClient`, and the library model types
 (`OrderProductItem`, `ProductListItem`, etc.).
 
+## Documentation
+
+Guides for authentication, the library client, and error handling are published at
+[pilgrimagesoftware.github.io/dtrpg-sdk.go](https://pilgrimagesoftware.github.io/dtrpg-sdk.go/)
+(source in `docs/site`).
+
 ## Development
 
 ```bash

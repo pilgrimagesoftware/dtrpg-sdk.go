@@ -1,0 +1,22 @@
+latest: latest
+versions:
+  - id: latest
+    label: Latest
+    path: /latest/
+    pages:
+      - index
+      - install
+      - auth
+      - library
+      - errors
+    nav:
+      - title: Overview
+        path: ""
+      - title: Installation
+        path: install/
+      - title: Authentication
+        path: auth/
+      - title: Library client
+        path: library/
+      - title: Errors
+        path: errors/
