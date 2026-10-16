@@ -77,3 +77,22 @@ if err != nil {
 
 `sdk.LibraryClient()` validates both configuration and session before constructing a
 `library.Client` — prefer it over calling `library.NewClient` directly.
+
+## Refreshing a session
+
+An access token is short-lived. To renew it without repeating the application-key
+exchange, call `sdk.RefreshSession`. It sends the session's refresh token to the API and
+replaces the stored session with the response, including the new refresh token and expiry.
+
+```go
+if _, err := sdk.RefreshSession(ctx); err != nil {
+	// The refresh token was rejected; fall back to auth.Authenticate with the
+	// application key. The existing session is left in place.
+	log.Fatal(err)
+}
+
+// Clients created before the refresh still hold the old token.
+client, err := sdk.LibraryClient()
+```
+
+`auth.RefreshToken(ctx, refreshToken, config)` makes the same call without an `Sdk`.

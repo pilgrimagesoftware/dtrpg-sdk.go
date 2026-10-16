@@ -1,6 +1,8 @@
 package dtrpg
 
 import (
+	"context"
+
 	"github.com/pilgrimagesoftware/dtrpg-sdk.go/auth"
 	"github.com/pilgrimagesoftware/dtrpg-sdk.go/library"
 )
@@ -120,4 +122,32 @@ func (s *Sdk) LibraryClient() (*library.Client, error) {
 		return nil, err
 	}
 	return library.NewClient(*config, session.Token()), nil
+}
+
+// RefreshSession renews the access token using the active session's refresh token.
+//
+// On success the stored session is replaced with the one the API returns, including its
+// (possibly rotated) refresh token and expiry, and the new session is returned. Any
+// library.Client created earlier still holds the old access token; call LibraryClient
+// again to get one with the new token.
+//
+// On failure the existing session is left in place, so the caller can decide whether to
+// retry, fall back to a fresh auth.Authenticate, or ClearSession.
+//
+// Returns ErrUnconfigured if the SDK has no Config, ErrUnauthenticated if it has no
+// session, and otherwise the error from auth.RefreshToken.
+func (s *Sdk) RefreshSession(ctx context.Context) (*auth.AuthSession, error) {
+	config, err := s.RequireConfig()
+	if err != nil {
+		return nil, err
+	}
+	session, err := s.RequireSession()
+	if err != nil {
+		return nil, err
+	}
+	response, err := auth.RefreshToken(ctx, session.RefreshToken(), *config)
+	if err != nil {
+		return nil, err
+	}
+	return s.ApplyAuthResponse(response)
 }
