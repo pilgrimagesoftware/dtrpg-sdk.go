@@ -3,6 +3,8 @@
 // types shared across the SDK. Authenticate exchanges an application key for a session
 // token against api.drivethrurpg.com. LoginWithCredentials exchanges an email/password
 // pair for an application key against www.drivethrurpg.com, upstream of Authenticate.
+// RefreshToken renews an access token from a refresh token without repeating that
+// exchange.
 package auth
 
 import "fmt"

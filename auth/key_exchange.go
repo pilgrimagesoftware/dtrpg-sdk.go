@@ -47,6 +47,14 @@ func Authenticate(ctx context.Context, apiKey string, config library.Config) (Au
 		return zero, err
 	}
 
+	return decodeTokenResponse(url, status, body)
+}
+
+// decodeTokenResponse decodes an auth endpoint's response body into an AuthTokenResponse.
+//
+// A body that does not decode, including an error body, becomes a *library.DecodeError
+// carrying the HTTP status and a truncated copy of the payload for diagnosis.
+func decodeTokenResponse(url string, status int, body []byte) (AuthTokenResponse, error) {
 	var response AuthTokenResponse
 	if err := json.Unmarshal(body, &response); err != nil {
 		payload := body
